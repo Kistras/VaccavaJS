@@ -2,9 +2,11 @@ const {MessageEmbed} = require("discord.js")
 
 let getlang
 let config
+let log
 module.exports.start = function(client, dirpath) {
     getlang = require(dirpath + '/_lang.js').getlang
     config = require(dirpath + '/_config.js')
+    log = require(dirpath + '/modules/log.js').log
 }
 
 function constructInfo(data, gd) {
@@ -34,6 +36,7 @@ module.exports.action = function(client, msg, splittext) {
                         msg.channel.send(getlang('config-editing-error', msg.guild) + "\n" + err)
                     else
                         msg.channel.send(getlang('config-editing-success', msg.guild))
+                        log(getlang('config-editing-result', msg.guild) + ` \`${field}\` => \`${data}\``, msg.guild)
                 })
             }
         }

@@ -19,6 +19,9 @@ RU['config-editing-error'] = 'Что-то странное произошло в
 
 EN['config-editing-success'] = 'Config was successfully edited!'
 RU['config-editing-success'] = 'Конфиг был успешно отредактирован!'
+
+EN['config-editing-result'] = "Changed value in config!"
+RU['config-editing-result'] = "Значение в конфиге было изменено!"
 //
 lang['russia'] = RU
 lang['default'] = EN
