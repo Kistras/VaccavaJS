@@ -4,10 +4,11 @@ const client = new Discord.Client()
 
 const {readfile} = require('./_file.js')
 const importer = require('./_importer.js')
+require('./_config.js') // Init config
 
 const modules = importer.import('./modules/')
-for(let key in modules){
-    if(modules[key].start){
+for (let key in modules) {
+    if (modules[key].start) {
         modules[key].start(client, __dirname)
     }
 }

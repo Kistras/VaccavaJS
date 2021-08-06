@@ -107,3 +107,5 @@ dist
 
 # Discord bot token
 token.txt
+data/*.json
+!data/Default.json
