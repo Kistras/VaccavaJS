@@ -37,17 +37,19 @@ function getconfig(datafile, field, funcresponse) {
 }
 module.exports.getconfig = getconfig
 
-function editconfig(datafile, field, data) {
+function editconfig(datafile, field, data, responsefunc) {
     // Prevent editing Defalut config
     if (datafile === 'Default') return
     // Use getconfig to automatically load config
     getconfig(datafile, null, function(dt){
         config[datafile][field] = data
-        writefile(datafile, JSON.stringify(config[datafile]), function(err) {
+        writefile(`./data/${datafile}.json`, JSON.stringify(config[datafile]), function(err) {
             if (err) {
                 console.log(`Error while saving JSON to ./data/${datafile}.json`)
                 console.log(err)
             }
+            if (responsefunc)
+                responsefunc(err)
         })
     }) 
 }
@@ -59,5 +61,6 @@ if(!defaultConfig){
         defaultConfig = conf
         console.log(conf)
         console.log('Default config initalized.')
+        module.exports.defaultConfig = conf
     })
 }
