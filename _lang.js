@@ -2,6 +2,11 @@ var lang = {}
 var EN = {}
 var RU = {}
 
+EN['and'] = ' and '
+RU['and'] = ' и '
+
+// // // 
+
 EN['ping'] = 'Hello!'
 RU['ping'] = 'Привет!'
 
@@ -20,8 +25,11 @@ RU['config-editing-error'] = 'Что-то странное произошло в
 EN['config-editing-success'] = 'Config was successfully edited!'
 RU['config-editing-success'] = 'Конфиг был успешно отредактирован!'
 
-EN['config-editing-result'] = "Changed value in config!"
-RU['config-editing-result'] = "Значение в конфиге было изменено!"
+EN['config-editing-result'] = 'Changed value in config!'
+RU['config-editing-result'] = 'Значение в конфиге было изменено!'
+
+EN['roll-result'] = 'A random number between '
+RU['roll-result'] = 'Случайное число между '
 //
 lang['russia'] = RU
 lang['default'] = EN

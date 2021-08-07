@@ -3,7 +3,7 @@ require('winston-daily-rotate-file')
 
 var transport = new winston.transports.DailyRotateFile({
   filename: './logs/%DATE%.log',
-  datePattern: 'YYYY-MM-DD-HH',
+  datePattern: 'YYYY-MM-DD',
   zippedArchive: true,
   maxSize: '20m',
   maxFiles: '6m'
@@ -13,10 +13,15 @@ transport.on('rotate', function(oldFilename, newFilename) {
   // do something fun
 })
 
+const { combine, timestamp, prettyPrint } = winston.format
 var logger = winston.createLogger({
   transports: [
     transport
-  ]
+  ],
+  format: combine(
+    timestamp(),
+    prettyPrint()
+  ),
 })
 
 let client
@@ -41,7 +46,10 @@ module.exports.log = function(text, guild, embeds) {
                 chn = guild.channels.cache.get(channel)
                 if (chn)
                     try {
-                        chn.send(text, embeds = embeds)
+                        if (embeds)
+                            chn.send(embeds = embeds)
+                        else
+                            chn.send(text)
                     } catch {logger("Failed to log")}
             }
         })
