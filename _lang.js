@@ -30,6 +30,9 @@ RU['config-editing-result'] = 'Значение в конфиге было из�
 
 EN['roll-result'] = 'A random number between '
 RU['roll-result'] = 'Случайное число между '
+
+EN['puro'] = "Whoops, guess I ain't this fluffy latex beast you're searchin' for. Try next time with some other bot that will actually give you some stuff."
+RU['puro'] = 'Упс, похоже, что я не тот пушистый латексный зверь, которого ты ищешь. В следующий раз попробуй это с каким-нибудь другим ботом, который даст тебе настоящего Пуро.'
 //
 lang['russia'] = RU
 lang['default'] = EN
