@@ -43,7 +43,7 @@ function editconfig(datafile, field, data, responsefunc) {
     // Use getconfig to automatically load config
     getconfig(datafile, null, function(dt){
         config[datafile][field] = data
-        writefile(`./data/${datafile}.json`, JSON.stringify(config[datafile]), function(err) {
+        writefile(__dirname + `/data/${datafile}.json`, JSON.stringify(config[datafile]), function(err) {
             if (err) {
                 console.log(`Error while saving JSON to ./data/${datafile}.json`)
                 console.log(err)

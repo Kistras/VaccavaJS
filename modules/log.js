@@ -6,7 +6,7 @@ var transport = new winston.transports.DailyRotateFile({
   datePattern: 'YYYY-MM-DD',
   zippedArchive: true,
   maxSize: '20m',
-  maxFiles: '6m'
+  maxFiles: '12m'
 })
 
 transport.on('rotate', function(oldFilename, newFilename) {
@@ -30,7 +30,7 @@ module.exports.start = function(client_, dirpath) {
     client = client_
     getconfig = require(dirpath + '/_config.js').getconfig
 }
-module.exports.log = function(text, guild, embeds) {
+module.exports.log = function(text, guild, embeds_) {
     if (text)
         if (guild) {
             const ntext = `[${guild.name}] ` + text
@@ -46,8 +46,8 @@ module.exports.log = function(text, guild, embeds) {
                 chn = guild.channels.cache.get(channel)
                 if (chn)
                     try {
-                        if (embeds)
-                            chn.send(embeds = embeds)
+                        if (embeds_) 
+                            chn.send({embeds: embeds_})
                         else
                             chn.send(text)
                     } catch {logger("Failed to log")}

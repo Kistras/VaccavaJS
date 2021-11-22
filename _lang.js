@@ -31,6 +31,48 @@ RU['config-editing-result'] = 'Значение в конфиге было из�
 EN['roll-result'] = 'A random number between '
 RU['roll-result'] = 'Случайное число между '
 
+EN['user-joined-server'] = 'Member have joined server'
+RU['user-joined-server'] = 'Участник подключился к северу'
+
+EN['user-joined-member'] = 'Joined member: '
+RU['user-joined-member'] = 'Подключившийся человек: '
+
+EN['user-joined-link'] = 'Located link: '
+RU['user-joined-link'] = 'Ссылка приглашения: '
+
+EN['user-joined-owner'] = 'Link owner: '
+RU['user-joined-owner'] = 'Link owner: '
+
+EN['message-logger-deleted'] = 'Message was deleted.'
+RU['message-logger-deleted'] = 'Сообщение было удалено.'
+
+EN['message-logger-edit-wasnt-found'] = 'Message wasn\'t found'
+RU['message-logger-edit-wasnt-found'] = 'Сообщение не было найдено'
+
+EN['message-logger-edited'] = 'Message was edited.'
+RU['message-logger-edited'] = 'Сообщение было отредактированно.'
+
+EN['message-logger-before-edit'] = 'Message before edit:'
+RU['message-logger-before-edit'] = 'Сообщение перед редактированием:'
+
+EN['message-logger-after-edit'] = 'Message after edit:'
+RU['message-logger-after-edit'] = 'Сообщение после редактирования:'
+
+EN['message-logger-attachments'] = 'Message has following attachments:'
+RU['message-logger-attachments'] = 'У сообщения есть такие вложения:'
+
+EN['message-logger-author-unknown'] = 'Author unknown.'
+RU['message-logger-author-unknown'] = 'Автор неизвестен.'
+
+EN['message-logger-contents'] = 'Message contents:'
+RU['message-logger-contents'] = 'Содержимое сообщения:'
+
+EN['message-logger-contents-unknown'] = 'Contents unknown.'
+RU['message-logger-contents-unknown'] = 'Содержимое неизвестно.'
+
+EN['no-permission'] = 'You do not have permission to use this command.'
+RU['no-permission'] = 'У тебя нет доступа к этой команде.'
+
 EN['puro'] = "Whoops, guess I ain't this fluffy latex beast you're searchin' for. Try next time with some other bot that will actually give you some stuff."
 RU['puro'] = 'Упс, похоже, что я не тот пушистый латексный зверь, которого ты ищешь. В следующий раз попробуй это с каким-нибудь другим ботом, который даст тебе настоящего Пуро.'
 //
