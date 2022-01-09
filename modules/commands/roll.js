@@ -14,7 +14,7 @@ module.exports.action = function(client, msg, splittext) {
             text += "1" + getlang('and', msg.guild) + "6"
         break
         case 2:
-            num = 1 + Math.random() * parseInt(splittext[1] - 1)
+            num = 1 + Math.random() * (parseInt(splittext[1]) - 1)
             text += "1" + getlang('and', msg.guild) + splittext[1]
         break
         case 3:
@@ -26,9 +26,8 @@ module.exports.action = function(client, msg, splittext) {
             return
         break
     }
-    
     const roll = new MessageEmbed()
         .setColor(65407)
-        .addField(text, Math.round(num))
-    msg.channel.send(embeds = [roll])
+        .addField(text, `${Math.round(num)}`)
+    msg.channel.send({embeds: [roll]})
 }

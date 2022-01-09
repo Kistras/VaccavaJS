@@ -6,12 +6,13 @@ module.exports.start = function(client, dirpath) {
     
     client.on('messageDelete', msg => {
         getconfig(msg.guild.id, 'LogModifiedMessages', function(isOn) {
-            if (isOn) {
+            if (isOn != false && isOn != 0) {
                 const msge = new MessageEmbed()
                     .setColor(16711680)
                     .setTitle(getlang('message-logger-deleted', msg.guild))
                 if (msg.author) {
                     msge.setAuthor(msg.author.username, msg.author.displayAvatarURL())
+                    msge.addField(getlang('message-logger-link', msg.guild), msg.url)
                     if (msg.content)
                         msge.addField(getlang('message-logger-contents', msg.guild), msg.content)
                     if (msg.attachments.size) {
@@ -39,12 +40,13 @@ module.exports.start = function(client, dirpath) {
 
     client.on('messageUpdate', (oldmsg, newmsg) => {
         getconfig(newmsg.guild.id, 'LogModifiedMessages', function(isOn) {
-            if (isOn) {
+            if (isOn != false && isOn != 0) {
                 const msge = new MessageEmbed()
                     .setColor(14143239)
                     .setTitle(getlang('message-logger-edited', newmsg.guild))
                 if (newmsg.author) {
                     msge.setAuthor(newmsg.author.username, newmsg.author.displayAvatarURL())
+                    msge.addField(getlang('message-logger-link', newmsg.guild), newmsg.url)
                     // Before
                     if (oldmsg && oldmsg.content)
                         msge.addField(getlang('message-logger-before-edit', newmsg.guild), oldmsg.content)

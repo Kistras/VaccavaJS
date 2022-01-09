@@ -19,32 +19,36 @@ module.exports.start = function(client, dirpath) {
     client.once('ready', () => {
         var inviteslog = {}
         function checkdisconnected(guild_, member) {
-            guild_.fetch().then((guild) => {
-                const invites_ = guild.invites
-                if (!inviteslog[guild.id]) inviteslog[guild.id] = {}
-                invites_.fetch().then((invites) => {
-                    var invitesnew = {}
-                    invites.each((invite, id) => {
-                        const data = {
-                            owner: invite.inviter.id,
-                            code: invite.code,
-                            uses: invite.uses
-                        }
-                        if (inviteslog[guild.id][id]) 
-                            if (inviteslog[guild.id][id].uses != invite.uses)
+            try {
+                guild_.fetch().then((guild) => {
+                    const invites_ = guild.invites
+                    if (!inviteslog[guild.id]) inviteslog[guild.id] = {}
+                    invites_.fetch().then((invites) => {
+                        var invitesnew = {}
+                        invites.each((invite, id) => {
+                            const data = {
+                                owner: invite.inviter.id,
+                                code: invite.code,
+                                uses: invite.uses
+                            }
+                            if (inviteslog[guild.id][id]) 
+                                if (inviteslog[guild.id][id].uses != invite.uses)
+                                    if (member)
+                                        log(null, guild, [constructJoining(data, member)])
+                            
+                            invitesnew[id] = data
+                        })
+                        for (key in inviteslog[guild.id]) {
+                            if (!invitesnew[key])
                                 if (member)
-                                    log(null, guild, [constructJoining(data, member)])
-                        
-                        invitesnew[id] = data
+                                    log(null, guild, [constructJoining(inviteslog[guild.id][key], member)])
+                        }
+                        inviteslog[guild.id] = invitesnew
                     })
-                    for (key in inviteslog[guild.id]) {
-                        if (!invitesnew[key])
-                            if (member)
-                                log(null, guild, [constructJoining(inviteslog[guild.id][key], member)])
-                    }
-                    inviteslog[guild.id] = invitesnew
                 })
-            })
+            } catch (e) {
+                console.log(`Couldn't check invites for ${_guild.id} cuz ${e}`)
+            }
         }
 
         // Forcefully update each guild
@@ -61,11 +65,13 @@ module.exports.start = function(client, dirpath) {
             checkdisconnected(member.guild, member)
             getconfig(member.guild.id, 'OnceJoinedRole', function(roleid) {
                 if (roleid != 0) {
+                    try {
                     member.guild.roles.fetch(roleid).then(role => {
-                        try {
                             member.roles.add(role)
-                        } catch {}
                     })
+                    } catch (e) {
+                        console.log(`Attempted to give a role ${roleid} to a member ${member.id} (guild ${member.guild.id}), but got ${e}`)
+                    }
                 }
             })
         })

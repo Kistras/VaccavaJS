@@ -1,13 +1,14 @@
 {
   "dependencies": {
-    "discord.js": "13.1.0",
+    "deasync": "^0.1.24",
+    "discord.js": "^13.4.0",
     "winston": "3.3.3",
     "winston-daily-rotate-file": "4.5.5"
   },
-  "scripts":{
-      "start": "node main.js"
+  "scripts": {
+    "start": "node main.js"
   },
   "engines": {
-      "node": "16.4.2"
+    "node": "16.4.2"
   }
 }

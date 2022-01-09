@@ -52,6 +52,9 @@ RU['message-logger-edit-wasnt-found'] = 'Сообщение не было най
 EN['message-logger-edited'] = 'Message was edited.'
 RU['message-logger-edited'] = 'Сообщение было отредактированно.'
 
+EN['message-logger-link'] = 'Link: '
+RU['message-logger-link'] = 'Ссылка: '
+
 EN['message-logger-before-edit'] = 'Message before edit:'
 RU['message-logger-before-edit'] = 'Сообщение перед редактированием:'
 

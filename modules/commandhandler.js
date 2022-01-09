@@ -8,7 +8,7 @@ module.exports.start = function(client, dirpath) {
         }
     }
 
-    client.on('message', msg => {
+    client.on('messageCreate', msg => {
         if (!msg.content || msg.content.length < 2) return
         if (!(msg.guild)) return
 
@@ -22,7 +22,11 @@ module.exports.start = function(client, dirpath) {
                 if (splittext.length === 0) return
 
                 if (splittext[0] in commands) {
-                    commands[splittext[0]].action(client, msg, splittext)
+                    try {
+                        commands[splittext[0]].action(client, msg, splittext)
+                    } catch (e) {
+                        console.log(`Tried to do command ${splittext[0]} in a guild ${msg.guild.id}, but got ${e}`)
+                    }
                 }
             }
         })

@@ -107,5 +107,11 @@ dist
 
 # Discord bot token
 token.txt
+
+# Configs
 data/*.json
 !data/Default.json
+
+# Backups & testing
+backups/*
+test.*
