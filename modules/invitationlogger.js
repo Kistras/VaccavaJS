@@ -32,15 +32,15 @@ module.exports.start = function(client, dirpath) {
                                 uses: invite.uses
                             }
                             if (inviteslog[guild.id][id]) 
-                                if (inviteslog[guild.id][id].uses != invite.uses)
-                                    if (member)
+                                if (inviteslog[guild.id][id].uses != invite.uses && guild)
+                                    if (member && member.id)
                                         log(null, guild, [constructJoining(data, member)])
                             
                             invitesnew[id] = data
                         })
                         for (key in inviteslog[guild.id]) {
-                            if (!invitesnew[key])
-                                if (member)
+                            if (!invitesnew[key] && guild)
+                                if (member && member.id)
                                     log(null, guild, [constructJoining(inviteslog[guild.id][key], member)])
                         }
                         inviteslog[guild.id] = invitesnew
@@ -58,7 +58,7 @@ module.exports.start = function(client, dirpath) {
             })
         }
         updateGuilds()
-        setInterval(updateGuilds, 1000 * 60 * 5)
+        setInterval(updateGuilds, 1000 * 60 * 20)
 
         // Add hooks
         client.on('guildMemberAdd', member => {

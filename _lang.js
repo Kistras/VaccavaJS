@@ -82,11 +82,16 @@ RU['puro'] = 'Упс, похоже, что я не тот пушистый ла�
 lang['russia'] = RU
 lang['default'] = EN
 module.exports.getlang = function(field, guild) {
-    if (guild.region in lang && field in lang[guild.region])
-        return lang[guild.region][field]
-    else
-        if (field in lang['default'])
-            return lang['default'][field]
+    try {
+        if (guild && guild.region in lang && field in lang[guild.region])
+            return lang[guild.region][field]
         else
-            return 'FIELD NOT FOUND PLZ CREATE ISSUE - https://github.com/Kistras/VaccavaJS'
+            if (field in lang['default'])
+                return lang['default'][field]
+            else
+                return 'FIELD NOT FOUND PLZ CREATE ISSUE - https://github.com/Kistras/VaccavaJS'
+    } catch (e) {
+        console.log(e, field, guild)
+        return 'FIELD NOT FOUND PLZ CREATE ISSUE - https://github.com/Kistras/VaccavaJS'
+    }
 }

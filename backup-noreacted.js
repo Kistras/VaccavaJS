@@ -24,7 +24,7 @@ function sleep(ms) {
 
 client.on('ready', async () => {
     console.log('Fetching guild')
-    const gl       = await client.guilds.resolve('845287136264454184')
+    const gl       = await client.guilds.resolve('859227591542177823')
     client.user.setPresence({ activities: [{ name: `Saving ${gl.name}` }], status: 'idle' })
     const glpath = __dirname + '/backups/' + gl.name
     if (!fs.existsSync(glpath)){fs.mkdirSync(glpath)}
@@ -160,7 +160,8 @@ client.on('ready', async () => {
                     "nsfw": ch.nsfw,
                     "created": ch.createdTimestamp,
                     "messages": logs,
-                    "permissions": permissions
+                    "permissions": permissions,
+                    "threadparent": (ch.isThread() ? ch.parentId : null)
                 }
                 await fs.writeFileSync(path + `/${ch.name}-${ch.id}.json`, JSON.stringify(channelinfo, null, 1), {encoding: "utf8"})
                 a -= 1
