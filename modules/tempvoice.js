@@ -29,7 +29,7 @@ module.exports.start = function(client, dirpath) {
 
                 if (newchannel && guildConfig["TempVoiceChannel"] == newstate.channelId) {
                     let member = await newstate.member.fetch()
-                    newstate.guild.channels.create(member.nickname, {
+                    newstate.guild.channels.create(member.displayName, {
                         type: 'GUILD_VOICE', // why
                         // Why does this link tells me to use VOICE_GUILD https://discord.js.org/#/docs/main/stable/typedef/ChannelType
                         // AND SOME OTHER CODE TELLS ME TO USE JUST VOICE AND ONLY ONE OF THEM WORKS DSAJFHASDLIFGASDLFHASLDF
