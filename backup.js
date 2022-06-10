@@ -79,27 +79,44 @@ client.on('ready', async () => {
     //await sleep(10000)
     var a = 0
     console.log('Processing...')
+    let everything = {}
     for (c in channels) {
         (async () => {
             //console.log(c)
             const ch = channels[c]
             if (ch.isText()) {
+                var permissions = {}
+                if (ch.permissionOverwrites) ch.permissionOverwrites.cache.each(function(v,k) {
+                    permissions[v.id] = {
+                        "id": v.id,
+                        "type": v.role,
+                        "deny": "" + v.deny.bitfield,
+                        "allow:": "" + v.allow.bitfield,
+                    }
+                })
+                everything[ch.id] = {
+                    "name": ch.name,
+                    "id": ch.id,
+                    "guildid": gl.id,
+                    "nsfw": ch.nsfw,
+                    "created": ch.createdTimestamp,
+                    "messages": [],
+                    "permissions": permissions,
+                    "threadparent": (ch.isThread() ? ch.parentId : null),
+                    'lastmsg': 0
+                }
                 a += 1
-                const msg = ch.messages
+                const nmsg = ch.messages
                 console.log(`(${a}/${channels.length}) Started ${ch.name}`)
-                let logs = []
-                await (async ()=>{
-                    let lastmessage = 0
-                    let count = 0
+                await (async (msg)=>{
                     while (true) {
-                        const messages = await msg.fetch({limit: 50, after: lastmessage})
-                        console.log(ch.name, count)
+                        const messages = await msg.fetch({limit: 50, after: everything[msg.channel.id]['lastmsg']})
+                        console.log(ch.name, everything[ch.id]['messages'].length)
                         if (messages.size == 0) break
                         //console.log(messages)
                         await sleep(10)
-                        for (m in messages.sort((msgA, msgB) => msgA.createdTimestamp - msgB.createdTimestamp)) {
-                            await sleep(10)
-                            count += 1
+                        for (m of messages.sort((msgA, msgB) => msgA.createdTimestamp - msgB.createdTimestamp).values()) {
+                            const chid = m.channelId
                             let actionrow = []
                             m.components.forEach(function(item, index, array) {
                                 actionrow.push(item.toJSON())
@@ -130,6 +147,7 @@ client.on('ready', async () => {
                             }
                             let msgdata = {
                                 "id": m.id,
+                                "channelid": m.channelId,
                                 "edit": m.editedTimestamp,
                                 "time": m.createdTimestamp,
                                 "type": m.type,
@@ -140,35 +158,23 @@ client.on('ready', async () => {
                                 "attachments": attachments,
                                 "reactions": reactions
                             }
-                            logs.push(msgdata)
-                            //console.log(count, ' - ', m.content)
-                            lastmessage = m.id
+                            everything[chid]['messages'].push(msgdata)
+                            if (m.id > everything[chid]['lastmsg']) everything[chid]['lastmsg'] = m.id
                             await sleep(10)
                         }
                     }
-                })()
-                var permissions = {}
-                if (ch.permissionOverwrites) ch.permissionOverwrites.cache.each(function(v,k) {
-                    permissions[v.id] = {
-                        "id": v.id,
-                        "type": v.role,
-                        "deny": "" + v.deny.bitfield,
-                        "allow:": "" + v.allow.bitfield,
-                    }
-                })
-                const channelinfo = {
-                    "name": ch.name,
-                    "id": ch.id,
-                    "guildid": gl.id,
-                    "nsfw": ch.nsfw,
-                    "created": ch.createdTimestamp,
-                    "messages": logs,
-                    "permissions": permissions,
-                    "threadparent": (ch.isThread() ? ch.parentId : null)
-                }
-                await fs.writeFileSync(path + `/${ch.name}-${ch.id}.json`, JSON.stringify(channelinfo, null, 1), {encoding: "utf8"})
+                })(nmsg)
                 a -= 1
                 console.log(`(${a}/${channels.length}) Finished ${ch.name}`)
+                if (a == 0) {
+                    console.log('AAAAAAAAAAAAAAAAAAAAAAAAA')
+                    for (ch11 in everything) {
+                        if (everything.hasOwnProperty(ch11)) {
+                            const ch1 = everything[ch11]
+                            await fs.writeFileSync(path + `/${ch1.name.replaceAll('|', '').replaceAll('\\', '').replaceAll('//', '').replaceAll('*', '').replaceAll('?', '').replaceAll('<', '').replaceAll('>', '').replaceAll(':', '')}-${ch1.id}.json`, JSON.stringify(ch1, null, 1), {encoding: "utf8"})
+                        }
+                    }
+                }
             }
         })()
     }
