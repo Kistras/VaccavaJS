@@ -45,6 +45,9 @@ module.exports.start = function(client, dirpath) {
                     .setColor(14143239)
                     .setTitle(getlang('message-logger-edited', newmsg.guild))
                 if (newmsg.author) {
+                    if (!newmsg.content || newmsg.content == oldmsg.content) {
+                        return
+                    }
                     msge.setAuthor(newmsg.author.username, newmsg.author.displayAvatarURL())
                     msge.addField(getlang('message-logger-link', newmsg.guild), newmsg.url)
                     // Before
