@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "deasync": "^0.1.24",
     "discord.js": "^13.4.0",
     "winston": "3.3.3",
     "winston-daily-rotate-file": "4.5.5"

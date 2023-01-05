@@ -9,7 +9,11 @@ const intents = [
     "GUILD_VOICE_STATES",
     "GUILD_MESSAGES",
 ]
-const client = new Discord.Client({intents: intents, partials: ['MESSAGE']})
+const client = new Discord.Client({intents: intents, partials: ['MESSAGE'], makeCache: Discord.Options.cacheWithLimits({
+    MessageManager: 1, // This is default
+    PresenceManager: 0,
+    // Add more class names here
+})})
 
 const {readfile} = require(__dirname + '/_file.js')
 const importer = require(__dirname + '/_importer.js')
